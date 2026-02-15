@@ -1,5 +1,9 @@
 from .base import *
 
+import os
+from pathlib import Path
+
+
 # Включаем режим отладки локально
 DEBUG = True
 
@@ -24,3 +28,17 @@ try:
     INTERNAL_IPS = ['127.0.0.1']
 except ImportError:
     pass
+
+
+
+
+# ... (другие настройки)
+
+# Путь к папке проекта
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# URL для обращения к файлам в браузере
+MEDIA_URL = '/media/'
+
+# Физический путь к папке на диске
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
