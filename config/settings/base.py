@@ -16,42 +16,43 @@ SECRET_KEY = env('SECRET_KEY', default='django-insecure-unsafe-key-for-dev')
 # Приложения
 INSTALLED_APPS = [
     # Admin Interface (должен быть перед admin)
-    'admin_interface',
-    'colorfield',
+    'admin_interface',# Для кастомизации админки
+    'colorfield',#  Зависимость для admin_interface (для выбора цветов)
 
     # Стандартные приложения
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin',# Для административного интерфейса
+    'django.contrib.auth',# Для аутентификации и управления пользователями
+    'django.contrib.contenttypes',  # Для моделей и миграций
+    'django.contrib.sessions',# Для сессий (необходимо для аутентификации)
+    'django.contrib.messages',# # Для сообщений (например, при входе/регистрации)
+    'django.contrib.staticfiles',# Для статики
 
     # === БЛОК ALLAUTH===
     'django.contrib.sites',      # Обязательно для allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    'allauth',# Основной пакет allauth
+    'allauth.account',# Для поддержки аутентификации по email и другим методам
+    'allauth.socialaccount',# Для поддержки социальных аккаунтов
     'allauth.socialaccount.providers.google',  # Провайдер Google
     # ==========================
 
-    # Сторонние библиотеки (Фаза 0 и 1)
+ 
     'parler',      # Мультиязычность
     
     # Наши приложения (создадим их структуру сейчас)
-    'apps.core',
-    'apps.accounts',
-    'apps.catalog',
-    'apps.warehouse',
+    'apps.core',#   Для общих моделей, утилит и настроек сайта
+    'apps.accounts',# Для управления пользователями и аутентификацией
+    'apps.catalog',# Для управления товарами и категориями
+    'apps.warehouse',# Для управления складом и запасами
     
     # Сторонние библиотеки
   
-    'django_ckeditor_5',
+    'django_ckeditor_5',# Редактор для описания товаров
+    'import_export', # Для импорта/экспорта данных в админке
     
     'mptt',       # <--- ВОТ ЭТА СТРОКА ОБЯЗАТЕЛЬНА!
-    'imagekit',
-    'django_cleanup.apps.CleanupConfig',
-    'apps.orders',
+    'imagekit',#    Для обработки изображений (например, создание миниатюр)
+    'django_cleanup.apps.CleanupConfig',# Для автоматической очистки файлов при удалении объектов (например, изображений)
+    'apps.orders',# Для управления заказами и корзиной (создадим позже)
 ]
 
 MIDDLEWARE = [
