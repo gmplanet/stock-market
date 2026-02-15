@@ -231,3 +231,6 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
+# === Import-Export Settings ===
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+IMPORT_EXPORT_SKIP_ADMIN_LOG = True  # Ускоряет загрузку больших файлов
