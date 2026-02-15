@@ -1,16 +1,9 @@
 from django.shortcuts import render
 from .models import Product
 
-def home(request):
-    """
-    Главная страница: показывает список всех товаров.
-    """
-    # Берем все активные товары
-    products = Product.objects.filter(is_active=True)
-    
-    context = {
-        'products': products,
-        'page_title': 'Home - Stock Market'
-    }
-    
-    return render(request, 'catalog/home.html', context)
+def product_list(request):
+    # Fetching only active products to show on the storefront
+    products = Product.objects.filter(is_active=True).order_by('-id')
+    return render(request, 'catalog/product_list.html', {
+        'products': products
+    })

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     # Сторонние библиотеки
   
     'django_ckeditor_5',# Редактор для описания товаров
-    
+    'import_export',# Для импорта/экспорта данных через админку
     
     'mptt',       # Для древовидных структур (категории)
     'imagekit',#    Для обработки изображений (например, создание миниатюр)
@@ -72,7 +72,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # Папка для общих шаблонов
+        'DIRS': [BASE_DIR / 'templates'], # Указываем общую папку templates в корне
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,8 +80,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # Наш кастомный процессор (создадим позже)
-                # 'apps.core.context_processors.site_settings', 
             ],
         },
     },

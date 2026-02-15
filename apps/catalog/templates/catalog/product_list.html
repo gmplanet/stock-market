@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}All Products | Stock Market{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Our Products</h1>
+    <span class="badge bg-secondary">{{ products.count }} items</span>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100 product-card shadow-sm">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title text-truncate">{{ product.name }}</h5>
+                <p class="text-muted small mb-2">SKU: {{ product.sku }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="h5 mb-0 text-primary">${{ product.price }}</span>
+                    {% if product.total_stock > 0 %}
+                        <span class="badge bg-success">In Stock</span>
+                    {% else %}
+                        <span class="badge bg-danger">Out of Stock</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3">
+                <a href="#" class="btn btn-dark w-100">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <h3 class="text-muted">No products found in our database.</h3>
+        <p>Check back later or contact support.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

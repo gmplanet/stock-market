@@ -8,14 +8,14 @@ django-environ==0.11.2
 
 # Admin Enhancements
 django-admin-interface==0.28.0  # улучшенный интерфейс админки
-
 django-parler==2.3 # для мультиязычности моделей
-
 django-allauth==0.61.1 # для аутентификации через социальные сети
 
- # для удобного редактирования текстов в админке
+# для удобного редактирования текстов в админке
 django-ckeditor-5==0.2.14
 django-imagekit==5.0.0 
 django-mptt==0.16.0 
 django-cleanup==8.0.0
 
+# Import/Export для XLS, CSV
+django-import-export==3.3

@@ -2,29 +2,36 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns # Импортируем для мультиязычности
 
+# 1. Сначала идут пути, которые НЕ ДОЛЖНЫ иметь префикса языка (технические)
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    
-    # Аутентификация
-    path('accounts/', include('allauth.urls')),
-    
-    
-    path("ckeditor5/", include('django_ckeditor_5.urls')),
-    path('orders/', include('apps.orders.urls')),
-
-    # === ГЛАВНАЯ СТРАНИЦА ===
-    # Мы говорим: "Все, что пришло на пустой адрес (''), ищи в apps.catalog.urls"
-    path('', include('apps.catalog.urls')),
-   
+    path('i18n/', include('django.conf.urls.i18n')), # Переключатель языков
+    path("ckeditor5/", include('django_ckeditor_5.urls')), # Редактор
 ]
 
-# Настройки для режима разработки (DEBUG=True)
+# 2. Основные разделы сайта, которые будут иметь префикс /en/, /es/ или /ru/
+urlpatterns += i18n_patterns(
+    path('admin/', admin.site.urls),
+    
+    # Аутентификация (Allauth)
+    path('accounts/', include('allauth.urls')),
+    
+    # Заказы
+    path('orders/', include('apps.orders.urls')),
+
+    # Каталог и главная страница
+    path('', include('apps.catalog.urls', namespace='catalog')),
+    
+    prefix_default_language=False # Английский (default) будет без /en/, остальные с префиксом
+)
+
+# 3. Настройки для режима разработки (DEBUG=True)
 if settings.DEBUG:
-    # 1. Раздача медиа-файлов (картинок)
+    # Раздача медиа-файлов
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     
-    # 2. Debug Toolbar
+    # Debug Toolbar
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
