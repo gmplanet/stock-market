@@ -11,10 +11,13 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import BaseTranslatableModel
 
+
+
 # 1. Создаем гибридный QuerySet (объединяем переводы и дерево)
 class CategoryQuerySet(TranslatableQuerySet, TreeQuerySet):
     def as_manager(self):
         return CategoryManager.from_queryset(type(self))()
+
 
 # 2. Создаем гибридный Manager
 class CategoryManager(TreeManager, TranslatableManager):
@@ -22,6 +25,7 @@ class CategoryManager(TreeManager, TranslatableManager):
     
     def get_queryset(self):
         return self.queryset_class(self.model, using=self._db)
+
 
 class Category(MPTTModel, BaseTranslatableModel):
     """

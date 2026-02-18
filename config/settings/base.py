@@ -13,6 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # БЕЗОПАСНОСТЬ: Ключ должен быть в .env
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-unsafe-key-for-dev')
 
+DEBUG = env('DEBUG')
+
 # Приложения
 INSTALLED_APPS = [
     # Admin Interface (должен быть перед admin)

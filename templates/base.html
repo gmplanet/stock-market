@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load parler_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -22,17 +23,23 @@
             
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    {# ... #}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-bold text-white" href="#" id="langPicker" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold text-white" href="#" id="langPicker" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ LANGUAGE_CODE|upper }}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="langPicker">
                             {% get_available_languages as LANGUAGES %}
                             {% for lang_code, lang_name in LANGUAGES %}
                                 <li>
-                                    <form action="{% url 'set_language' %}" method="post">
+                                    <form action="{% url 'set_language' %}" method="post" id="lang-form-{{ lang_code }}">
                                         {% csrf_token %}
                                         <input name="language" type="hidden" value="{{ lang_code }}">
+                                        
+                                        {# 2. ИЗМЕНЕННАЯ ЛОГИКА ДЛЯ NEXT: #}
+                                        {% get_translated_url lang_code as tr_url %}
+                                        <input name="next" type="hidden" value="{{ tr_url|default:request.path }}">
+                                        
                                         <button type="submit" class="dropdown-item {% if lang_code == LANGUAGE_CODE %}active{% endif %}">
                                             {{ lang_name }}
                                         </button>
